@@ -16,7 +16,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"}
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
     dexOptions {
         javaMaxHeapSize "2g"
     }
@@ -51,10 +52,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'org.mongodb:stitch-android-sdk:4.5.0'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

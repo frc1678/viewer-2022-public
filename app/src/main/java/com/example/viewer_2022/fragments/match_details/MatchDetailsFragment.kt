@@ -6,7 +6,7 @@
 * Copyright 2020 Citrus Circuits. All rights reserved.
 */
 
-package com.example.viewer_2022.fragments.match_schedule.match_details
+package com.example.viewer_2022.fragments.match_details
 
 import android.graphics.Paint
 import android.graphics.Typeface

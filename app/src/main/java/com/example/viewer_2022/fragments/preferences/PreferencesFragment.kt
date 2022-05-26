@@ -1,8 +1,7 @@
-package com.example.viewer_2022
+package com.example.viewer_2022.fragments.preferences
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.example.viewer_2022.MainViewerActivity
 import com.example.viewer_2022.MainViewerActivity.UserDatapoints
 import com.example.viewer_2022.constants.Constants
 import kotlinx.android.synthetic.main.fragment_preferences.*
 import kotlinx.android.synthetic.main.fragment_preferences.view.*
 import com.example.viewer_2022.MainViewerActivity.StarredMatches
+import com.example.viewer_2022.R
+import com.example.viewer_2022.fragments.user_preferences.UserPreferencesFragment
 
+// Preferences page
 class PreferencesFragment : Fragment() {
 
     override fun onCreateView(
@@ -45,7 +48,8 @@ class PreferencesFragment : Fragment() {
         }
 
         // If all of our matches are already starred then it sets the Star Our Matches toggle to true
-        root.tb_highlight_our_matches.isChecked = MainViewerActivity.starredMatches.containsAll(StarredMatches.citrusMatches)
+        root.tb_highlight_our_matches.isChecked =
+            MainViewerActivity.starredMatches.containsAll(StarredMatches.citrusMatches)
 
         root.tb_highlight_our_matches.setOnClickListener { starOurMatches() }
 

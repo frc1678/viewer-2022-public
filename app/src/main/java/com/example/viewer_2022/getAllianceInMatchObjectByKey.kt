@@ -28,10 +28,12 @@ fun getAllianceInMatchObjectByKey(
             as List<*>) {
         if (getDirectField(`object`!!, "match_number").toString() == matchNumber) {
             if (getDirectField(`object`, "alliance_color_is_red").toString() == "true" &&
-                    allianceColor == "red")
+                allianceColor == "red"
+            )
                 return getDirectField(`object`, field).toString()
             else if (getDirectField(`object`, "alliance_color_is_red").toString() == "false" &&
-                allianceColor == "blue")
+                allianceColor == "blue"
+            )
                 return getDirectField(`object`, field).toString()
         }
     }

@@ -26,7 +26,7 @@ import com.example.viewer_2022.getMatchSchedule
 import kotlinx.android.synthetic.main.fragment_match_schedule.view.*
 
 //The fragment of the match schedule 'view' that is one of the options of the navigation bar.
-open class MatchScheduleFragment : Fragment(){
+open class MatchScheduleFragment : Fragment() {
     private var teamNumber: String? = null
     private var refreshId: String? = null
 
@@ -56,7 +56,7 @@ open class MatchScheduleFragment : Fragment(){
             scheduleType,
             root.lv_match_schedule
         )
-        if(refreshId == null){
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: match-schedule")
                 adapter.notifyDataSetChanged()
@@ -64,20 +64,30 @@ open class MatchScheduleFragment : Fragment(){
         }
         root.lv_match_schedule.adapter = adapter
 
-        if(teamNumber != null){
+        if (teamNumber != null) {
             root.match_search_bar.setText(teamNumber)
             val search = listOf(teamNumber!!)
-            var matchesWanted = getMatchSchedule(search,
+            var matchesWanted = getMatchSchedule(
+                search,
                 false
             )
-            if(!matchesWanted.isEmpty()) {
-                (adapter as MatchScheduleListAdapter).updateData(matchesWanted, Constants.ScheduleType.OUR_MATCHES)
+            if (!matchesWanted.isEmpty()) {
+                (adapter as MatchScheduleListAdapter).updateData(
+                    matchesWanted,
+                    Constants.ScheduleType.OUR_MATCHES
+                )
                 Log.e("matchesWanted", "$matchesWanted")
-            } else if (teamNumber!!.length == 0){
+            } else if (teamNumber!!.length == 0) {
                 matchesWanted = getMatchSchedule((listOf()), true)
-                (adapter as MatchScheduleListAdapter).updateData(matchesWanted, Constants.ScheduleType.STARRED_MATCHES)
+                (adapter as MatchScheduleListAdapter).updateData(
+                    matchesWanted,
+                    Constants.ScheduleType.STARRED_MATCHES
+                )
             } else {
-                (adapter as MatchScheduleListAdapter).updateData(matchesWanted, Constants.ScheduleType.OUR_MATCHES)
+                (adapter as MatchScheduleListAdapter).updateData(
+                    matchesWanted,
+                    Constants.ScheduleType.OUR_MATCHES
+                )
             }
         }
 
@@ -88,19 +98,30 @@ open class MatchScheduleFragment : Fragment(){
                 if (scheduleType == Constants.ScheduleType.OUR_MATCHES) {
                     search.add(Constants.MY_TEAM_NUMBER)
                 }
-                var matchesWanted = getMatchSchedule(search,
+                var matchesWanted = getMatchSchedule(
+                    search,
                     scheduleType == Constants.ScheduleType.STARRED_MATCHES
                 )
-                if(!matchesWanted.isEmpty()) {
-                    (adapter as MatchScheduleListAdapter).updateData(matchesWanted, Constants.ScheduleType.OUR_MATCHES)
+                if (!matchesWanted.isEmpty()) {
+                    (adapter as MatchScheduleListAdapter).updateData(
+                        matchesWanted,
+                        Constants.ScheduleType.OUR_MATCHES
+                    )
                     Log.e("matchesWanted", "$matchesWanted")
-                } else if (s.toString().length == 0){
-                    matchesWanted = getMatchSchedule((if (scheduleType == Constants.ScheduleType.OUR_MATCHES) listOf(Constants.MY_TEAM_NUMBER) else listOf()), scheduleType == Constants.ScheduleType.STARRED_MATCHES)
+                } else if (s.toString().length == 0) {
+                    matchesWanted = getMatchSchedule(
+                        (if (scheduleType == Constants.ScheduleType.OUR_MATCHES) listOf(Constants.MY_TEAM_NUMBER) else listOf()),
+                        scheduleType == Constants.ScheduleType.STARRED_MATCHES
+                    )
                     (adapter as MatchScheduleListAdapter).updateData(matchesWanted, scheduleType)
                 } else {
-                     (adapter as MatchScheduleListAdapter).updateData(matchesWanted, Constants.ScheduleType.OUR_MATCHES)
-                 }
+                    (adapter as MatchScheduleListAdapter).updateData(
+                        matchesWanted,
+                        Constants.ScheduleType.OUR_MATCHES
+                    )
+                }
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
 

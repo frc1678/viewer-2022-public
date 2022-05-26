@@ -21,7 +21,7 @@ fun getTeamDataValue(teamNumber: String, field: String): String {
         Constants.PROCESSED_OBJECT.CALCULATED_TBA_TEAM.value,
         Constants.PROCESSED_OBJECT.CALCULATED_PICKABILITY.value,
         Constants.PROCESSED_OBJECT.CALCULATED_SUBJECTIVE_TEAM_IN_MATCH.value,
-        )
+    )
     ) {
         try {
             if (getTeamObjectByKey(
@@ -45,7 +45,7 @@ fun getTeamDataValue(teamNumber: String, field: String): String {
     for (item in listOf(
         "raw_obj_pit"
 //        "raw_subj_pit"
-        )
+    )
     ) {
         try {
             if (getRawObjectByKey(

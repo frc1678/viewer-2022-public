@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:id="@+id/whole_line"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:id="@+id/whole_line">
+    android:orientation="horizontal">
 
-    <TextView style="@style/tv_standard_black"
+    <TextView
         android:id="@+id/tv_match_number"
+        style="@style/tv_standard_black"
         android:gravity="center"
-        android:text="Qual 1"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:text="Qual 1" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:layout_weight="5"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,23 +26,26 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Red"
-                android:id="@+id/tv_red_team_one" />
+            <Button
+                android:id="@+id/tv_red_team_one"
+                style="@style/tv_standard_white"
+                android:background="@color/Red" />
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Red"
-                android:id="@+id/tv_red_team_two" />
+            <Button
+                android:id="@+id/tv_red_team_two"
+                style="@style/tv_standard_white"
+                android:background="@color/Red" />
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Red"
-                android:id="@+id/tv_red_team_three" />
+            <Button
+                android:id="@+id/tv_red_team_three"
+                style="@style/tv_standard_white"
+                android:background="@color/Red" />
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,52 +54,57 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/tv_red_predicted_rp1"
                         style="@style/RP_images"
-                        android:src="@drawable/cargo_ball"
-                        android:id="@+id/tv_red_predicted_rp1" />
+                        android:src="@drawable/cargo_ball" />
 
                     <ImageView
+                        android:id="@+id/tv_red_predicted_rp2"
                         style="@style/RP_images"
-                        android:src="@drawable/pull_up_bars"
-                        android:id="@+id/tv_red_predicted_rp2" />
+                        android:src="@drawable/pull_up_bars" />
 
                 </LinearLayout>
 
-                <TextView style="@style/tv_rp_datapoint"
+                <TextView
                     android:id="@+id/tv_red_predicted_score"
+                    style="@style/tv_rp_datapoint"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:gravity="left"
                     android:padding="5dp"
-                    android:textSize="12sp"
-                    android:layout_weight="2"
-                    android:layout_width="match_parent"/>
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Blue"
-                android:id="@+id/tv_blue_team_one" />
+            <Button
+                android:id="@+id/tv_blue_team_one"
+                style="@style/tv_standard_white"
+                android:background="@color/Blue" />
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Blue"
-                android:id="@+id/tv_blue_team_two" />
+            <Button
+                android:id="@+id/tv_blue_team_two"
+                style="@style/tv_standard_white"
+                android:background="@color/Blue" />
 
-            <Button style="@style/tv_standard_white"
-                android:background="@color/Blue"
-                android:id="@+id/tv_blue_team_three" />
+            <Button
+                android:id="@+id/tv_blue_team_three"
+                style="@style/tv_standard_white"
+                android:background="@color/Blue" />
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,25 +113,26 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/tv_blue_predicted_rp1"
                         style="@style/RP_images"
-                        android:src="@drawable/cargo_ball"
-                        android:id="@+id/tv_blue_predicted_rp1" />
+                        android:src="@drawable/cargo_ball" />
 
                     <ImageView
+                        android:id="@+id/tv_blue_predicted_rp2"
                         style="@style/RP_images"
-                        android:src="@drawable/pull_up_bars"
-                        android:id="@+id/tv_blue_predicted_rp2" />
+                        android:src="@drawable/pull_up_bars" />
 
                 </LinearLayout>
 
-                <TextView style="@style/tv_rp_datapoint"
+                <TextView
                     android:id="@+id/tv_blue_predicted_score"
-                    android:textSize="12sp"
-                    android:gravity="left"
-                    android:padding="5dp"
+                    style="@style/tv_rp_datapoint"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-                    android:layout_width="match_parent"/>
+                    android:gravity="left"
+                    android:padding="5dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

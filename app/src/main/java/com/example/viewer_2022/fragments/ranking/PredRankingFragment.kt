@@ -12,6 +12,9 @@ import com.example.viewer_2022.constants.Translations
 import com.example.viewer_2022.fragments.team_details.TeamDetailsFragment
 import kotlinx.android.synthetic.main.fragment_ranking.view.*
 
+/**
+ * Page for showing predicted rankings
+ */
 class PredRankingFragment : Fragment() {
     private val teamDetailsFragment = TeamDetailsFragment()
     private val teamDetailsFragmentArguments = Bundle()
@@ -44,11 +47,13 @@ class PredRankingFragment : Fragment() {
         root.tv_datapoint_five.text =
             Translations.ACTUAL_TO_HUMAN_READABLE[Constants.FIELDS_TO_BE_DISPLAYED_RANKING[0]]
 
-        val adapter = PredRankingListAdapter(activity!!, convertToPredFilteredTeamsList(
-            Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value,
-            MainViewerActivity.teamList
-        ))
-        if(refreshId == null){
+        val adapter = PredRankingListAdapter(
+            activity!!, convertToPredFilteredTeamsList(
+                Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value,
+                MainViewerActivity.teamList
+            )
+        )
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: pred-ranking")
                 adapter.notifyDataSetChanged()
@@ -76,6 +81,7 @@ class PredRankingFragment : Fragment() {
         }
         return root
     }
+
     fun toggletoRanking() {
         val rankingFragment = RankingFragment()
         val ft = fragmentManager!!.beginTransaction()

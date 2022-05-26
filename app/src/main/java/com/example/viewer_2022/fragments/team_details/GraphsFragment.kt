@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.viewer_2022.*
 import com.example.viewer_2022.constants.Constants
 import com.example.viewer_2022.constants.Translations
-import com.example.viewer_2022.fragments.match_schedule.match_details.MatchDetailsFragment
+import com.example.viewer_2022.fragments.match_details.MatchDetailsFragment
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -25,6 +25,9 @@ import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Utils
 
+/**
+ * Page that the graphs are displayed on
+ */
 class GraphsFragment() : Fragment() {
     private var teamNumber: String? = null
     private var datapoint: String? = null
@@ -41,63 +44,72 @@ class GraphsFragment() : Fragment() {
         }
 
         root.tv_team_number.text = teamNumber
-        root.tv_datapoint.text = "${Translations.ACTUAL_TO_HUMAN_READABLE[datapoint]} by ${Translations.TIM_TO_HUMAN_READABLE[datapoint!!]}"
+        root.tv_datapoint.text =
+            "${Translations.ACTUAL_TO_HUMAN_READABLE[datapoint]} by ${Translations.TIM_TO_HUMAN_READABLE[datapoint!!]}"
 
         val timDatapoint = Translations.TIM_FROM_TEAM[datapoint!!]
 
         //get data
-        val timDataMap : Map<String, String> = if(timDatapoint == "auto_line"){
-            getTIMDataValue(teamNumber!!, timDatapoint,
-                Constants.PROCESSED_OBJECT.CALCULATED_TBA_TEAM_IN_MATCH.value)
+        val timDataMap: Map<String, String> = if (timDatapoint == "auto_line") {
+            getTIMDataValue(
+                teamNumber!!, timDatapoint,
+                Constants.PROCESSED_OBJECT.CALCULATED_TBA_TEAM_IN_MATCH.value
+            )
         } else if (timDatapoint == "played_defense") {
-            getTIMDataValue(teamNumber!!, timDatapoint,
-                Constants.PROCESSED_OBJECT.CALCULATED_SUBJECTIVE_TEAM_IN_MATCH.value)
-        } else{
-            getTIMDataValue(teamNumber!!, timDatapoint!!,
-                Constants.PROCESSED_OBJECT.CALCULATED_OBJECTIVE_TEAM_IN_MATCH.value)
+            getTIMDataValue(
+                teamNumber!!, timDatapoint,
+                Constants.PROCESSED_OBJECT.CALCULATED_SUBJECTIVE_TEAM_IN_MATCH.value
+            )
+        } else {
+            getTIMDataValue(
+                teamNumber!!, timDatapoint!!,
+                Constants.PROCESSED_OBJECT.CALCULATED_OBJECTIVE_TEAM_IN_MATCH.value
+            )
         }
 
-        var timDataListClimbLevel : List<String>? = null
-        if(Constants.GRAPHABLE_CLIMB_TIMES.contains(datapoint!!)){
-            timDataListClimbLevel = getTIMDataValue(teamNumber!!, "climb_level",
-                Constants.PROCESSED_OBJECT.CALCULATED_OBJECTIVE_TEAM_IN_MATCH.value).values.toList()
+        var timDataListClimbLevel: List<String>? = null
+        if (Constants.GRAPHABLE_CLIMB_TIMES.contains(datapoint!!)) {
+            timDataListClimbLevel = getTIMDataValue(
+                teamNumber!!, "climb_level",
+                Constants.PROCESSED_OBJECT.CALCULATED_OBJECTIVE_TEAM_IN_MATCH.value
+            ).values.toList()
         }
 
         //add data to a list of BarEntries so it can be added to the chart
         val entries: ArrayList<BarEntry> = ArrayList()
-        for((index, timData) in timDataMap.values.withIndex()){
-            if((datapoint=="matches_incap")){
-                if((timData != "0") and (timData != Constants.NULL_CHARACTER)){
+        for ((index, timData) in timDataMap.values.withIndex()) {
+            if ((datapoint == "matches_incap")) {
+                if ((timData != "0") and (timData != Constants.NULL_CHARACTER)) {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint=="low_rung_successes"){
-                if(timData.lowercase() == "low"){
+            } else if (datapoint == "low_rung_successes") {
+                if (timData.lowercase() == "low") {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint=="mid_rung_successes"){
-                if(timData.lowercase() == "mid"){
+            } else if (datapoint == "mid_rung_successes") {
+                if (timData.lowercase() == "mid") {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint=="high_rung_successes"){
-                if(timData.lowercase() == "high"){
+            } else if (datapoint == "high_rung_successes") {
+                if (timData.lowercase() == "high") {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint=="traversal_rung_successes"){
-                if(timData.lowercase() == "traversal"){
+            } else if (datapoint == "traversal_rung_successes") {
+                if (timData.lowercase() == "traversal") {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "mode_climb_level"){
-                when(timDataListClimbLevel!![index].lowercase()){
+            } else if (datapoint == "mode_climb_level") {
+                when (timDataListClimbLevel!![index].lowercase()) {
                     "low" -> entries.add(BarEntry(index.toFloat(), 1F))
                     "mid" -> entries.add(BarEntry(index.toFloat(), 2F))
                     "high" -> entries.add(BarEntry(index.toFloat(), 3F))
@@ -105,8 +117,8 @@ class GraphsFragment() : Fragment() {
                     else -> entries.add(BarEntry(index.toFloat(), 0F))
                 }
                 root.bar_chart.axisLeft.axisMaximum = 4F
-            } else if (datapoint == "mode_start_position"){
-                when(timData.lowercase()){
+            } else if (datapoint == "mode_start_position") {
+                when (timData.lowercase()) {
                     "zero" -> entries.add(BarEntry(index.toFloat(), 0F))
                     "one" -> entries.add(BarEntry(index.toFloat(), 1F))
                     "two" -> entries.add(BarEntry(index.toFloat(), 2F))
@@ -115,44 +127,44 @@ class GraphsFragment() : Fragment() {
                     else -> entries.add(BarEntry(index.toFloat(), 0F))
                 }
                 root.bar_chart.axisLeft.axisMaximum = 4F
-            } else if (datapoint == "position_zero_starts"){
-                if(timData.lowercase() == "zero"){
+            } else if (datapoint == "position_zero_starts") {
+                if (timData.lowercase() == "zero") {
                     entries.add(BarEntry(index.toFloat(), 1F))
                 } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "position_one_starts"){
-                if(timData.lowercase() == "one"){
+            } else if (datapoint == "position_one_starts") {
+                if (timData.lowercase() == "one") {
                     entries.add(BarEntry(index.toFloat(), 1F))
                 } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "position_two_starts"){
-                if(timData.lowercase() == "two"){
+            } else if (datapoint == "position_two_starts") {
+                if (timData.lowercase() == "two") {
                     entries.add(BarEntry(index.toFloat(), 1F))
                 } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "position_three_starts"){
-                if(timData.lowercase() == "three"){
+            } else if (datapoint == "position_three_starts") {
+                if (timData.lowercase() == "three") {
                     entries.add(BarEntry(index.toFloat(), 1F))
                 } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "position_four_starts"){
-                if(timData.lowercase() == "four"){
+            } else if (datapoint == "position_four_starts") {
+                if (timData.lowercase() == "four") {
                     entries.add(BarEntry(index.toFloat(), 1F))
                 } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "climb_percent_success"){
-                if((timData.lowercase() != "none") and (timData != Constants.NULL_CHARACTER)){
+            } else if (datapoint == "climb_percent_success") {
+                if ((timData.lowercase() != "none") and (timData != Constants.NULL_CHARACTER)) {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                } else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if (datapoint == "avg_climb_points"){
-                when(timDataListClimbLevel!![index].lowercase()){
+            } else if (datapoint == "avg_climb_points") {
+                when (timDataListClimbLevel!![index].lowercase()) {
                     "low" -> entries.add(BarEntry(index.toFloat(), 1F))
                     "mid" -> entries.add(BarEntry(index.toFloat(), 2F))
                     "high" -> entries.add(BarEntry(index.toFloat(), 3F))
@@ -160,8 +172,8 @@ class GraphsFragment() : Fragment() {
                     else -> entries.add(BarEntry(index.toFloat(), 0F))
                 }
                 root.bar_chart.axisLeft.axisMaximum = 4F
-            } else if (datapoint == "climb_all_attempts"){
-                when(timDataListClimbLevel!![index].lowercase()){
+            } else if (datapoint == "climb_all_attempts") {
+                when (timDataListClimbLevel!![index].lowercase()) {
                     "low" -> entries.add(BarEntry(index.toFloat(), 1F))
                     "mid" -> entries.add(BarEntry(index.toFloat(), 2F))
                     "high" -> entries.add(BarEntry(index.toFloat(), 3F))
@@ -169,15 +181,15 @@ class GraphsFragment() : Fragment() {
                     else -> entries.add(BarEntry(index.toFloat(), 0F))
                 }
                 root.bar_chart.axisLeft.axisMaximum = 4F
-            } else if(Constants.GRAPHABLE_BOOL.contains(datapoint!!)) {
+            } else if (Constants.GRAPHABLE_BOOL.contains(datapoint!!)) {
                 if (timData == "true") {
                     entries.add(BarEntry(index.toFloat(), 1F))
-                }else{
+                } else {
                     entries.add(BarEntry(index.toFloat(), 0F))
                 }
-            } else if(timData != Constants.NULL_CHARACTER){
+            } else if (timData != Constants.NULL_CHARACTER) {
                 entries.add(BarEntry(index.toFloat(), timData.toFloat()))
-            } else{
+            } else {
                 entries.add(BarEntry(index.toFloat(), 0F))
             }
         }
@@ -190,9 +202,12 @@ class GraphsFragment() : Fragment() {
         root.bar_chart.data = data
 
         //set color of bars
-        barDataSet.setColors(ContextCompat.getColor(
-            context!!,
-            R.color.colorPrimaryLight))
+        barDataSet.setColors(
+            ContextCompat.getColor(
+                context!!,
+                R.color.colorPrimaryLight
+            )
+        )
 
         //set text size of the numbers labelling the height of each bar
         barDataSet.valueTextSize = 12F
@@ -217,9 +232,10 @@ class GraphsFragment() : Fragment() {
 
         //set yAxis minimum to 0
         root.bar_chart.axisLeft.axisMinimum = 0F
-        if((datapoint!! in Constants.GRAPHABLE_BOOL) or (datapoint == "position_zero_starts") or (datapoint == "position_one_starts") or
+        if ((datapoint!! in Constants.GRAPHABLE_BOOL) or (datapoint == "position_zero_starts") or (datapoint == "position_one_starts") or
             (datapoint == "position_two_starts") or (datapoint == "position_three_starts") or
-            (datapoint == "position_four_starts")){
+            (datapoint == "position_four_starts")
+        ) {
             root.bar_chart.axisLeft.axisMaximum = 1F
         }
 
@@ -238,11 +254,14 @@ class GraphsFragment() : Fragment() {
         root.bar_chart.xAxis.setCenterAxisLabels(true)
 
         //customize xAxisRenderer to display labels at specific positions
-        val specificPositionLabelsXAxisRenderer : XAxisRenderer = object : XAxisRenderer(
-            root.bar_chart.viewPortHandler, root.bar_chart.xAxis, root.bar_chart.getTransformer(YAxis.AxisDependency.LEFT)) {
+        val specificPositionLabelsXAxisRenderer: XAxisRenderer = object : XAxisRenderer(
+            root.bar_chart.viewPortHandler,
+            root.bar_chart.xAxis,
+            root.bar_chart.getTransformer(YAxis.AxisDependency.LEFT)
+        ) {
             override fun drawLabels(c: Canvas, pos: Float, anchor: MPPointF) {
                 val specificLabelPositions: MutableList<Float> = mutableListOf()
-                for (i in 0 until timDataMap.size){
+                for (i in 0 until timDataMap.size) {
                     specificLabelPositions.add(i.toFloat())
                 }
                 val labelRotationAngleDegrees = mXAxis.labelRotationAngle
@@ -256,7 +275,10 @@ class GraphsFragment() : Fragment() {
                 for (i in positions.indices step 2) {
                     var x = positions[i]
                     if (mViewPortHandler.isInBoundsX(x)) {
-                        val label = mXAxis.valueFormatter.getFormattedValue(specificLabelPositions[i / 2], mXAxis)
+                        val label = mXAxis.valueFormatter.getFormattedValue(
+                            specificLabelPositions[i / 2],
+                            mXAxis
+                        )
                         if (mXAxis.isAvoidFirstLastClippingEnabled) {
                             // avoid clipping of the last
                             if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
@@ -278,7 +300,7 @@ class GraphsFragment() : Fragment() {
         root.bar_chart.setXAxisRenderer(specificPositionLabelsXAxisRenderer)
 
         //format xAxis labels to be Q then the appropriate match number as an integer
-        val xValueFormatter: ValueFormatter = object : ValueFormatter(){
+        val xValueFormatter: ValueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return "Q${timDataMap.keys.toList()[value.toInt()]}"
             }
@@ -334,7 +356,7 @@ class GraphsFragment() : Fragment() {
                 }
 
                 override fun onNothingSelected() {
-               }
+                }
             }
         }
 

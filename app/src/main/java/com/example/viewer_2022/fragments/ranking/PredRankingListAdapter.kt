@@ -24,7 +24,7 @@ import java.util.regex.Pattern
 class PredRankingListAdapter(
     private val activity: Activity,
     private val listContents: List<String>
-): BaseAdapter() {
+) : BaseAdapter() {
 
     private val inflater = LayoutInflater.from(activity)
 
@@ -64,24 +64,48 @@ class PredRankingListAdapter(
 
         val regex: Pattern = Pattern.compile("[0-9]+" + Regex.escape(".") + "[0-9]+")
 
-        viewHolder.tvDatapointOne.text = getTeamObject("predicted_rank",
-            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value)
+        viewHolder.tvDatapointOne.text = getTeamObject(
+            "predicted_rank",
+            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+        )
         viewHolder.tvDatapointTwo.text =
-            if (regex.matcher(getTeamObject("current_avg_rps",
-                    position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value)).matches()) {
-                (("%.2f").format(Float.parseFloat(getTeamObject("current_avg_rps",
-                    position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value))))
-            } else{
-                getTeamObject("current_avg_rps",
-                    position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value)
+            if (regex.matcher(
+                    getTeamObject(
+                        "current_avg_rps",
+                        position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+                    )
+                ).matches()
+            ) {
+                (("%.2f").format(
+                    Float.parseFloat(
+                        getTeamObject(
+                            "current_avg_rps",
+                            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+                        )
+                    )
+                ))
+            } else {
+                getTeamObject(
+                    "current_avg_rps",
+                    position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+                )
             }
-        viewHolder.tvDatapointThree.text = getTeamObject("current_rps",
-            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value)
-        val predValue = (getTeamObject("predicted_rps",
-            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value))
-        viewHolder.tvDatapointFour.text = if(predValue == Constants.NULL_CHARACTER) Constants.NULL_CHARACTER else ("%.2f").format(predValue.toFloat())
-        viewHolder.tvDatapointFive.text = getTeamObject("current_rank",
-            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value)
+        viewHolder.tvDatapointThree.text = getTeamObject(
+            "current_rps",
+            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+        )
+        val predValue = (getTeamObject(
+            "predicted_rps",
+            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+        ))
+        viewHolder.tvDatapointFour.text =
+            if (predValue == Constants.NULL_CHARACTER) Constants.NULL_CHARACTER else ("%.2f").format(
+                predValue.toFloat()
+            )
+        viewHolder.tvDatapointFive.text = getTeamObject(
+            "current_rank",
+            position, Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value
+        )
 
         return rowView!!
     }
@@ -89,9 +113,11 @@ class PredRankingListAdapter(
     private fun getTeamObject(field: String, position: Int, path: String): String {
         return getTeamObjectByKey(
             path, listContents[position],
-            field)
+            field
+        )
     }
 }
+
 // View holder class to handle the elements used in the custom cells.
 private class PredViewHolder(view: View?) {
     val tvTeamNumber = view?.findViewById(R.id.tv_team_number) as TextView

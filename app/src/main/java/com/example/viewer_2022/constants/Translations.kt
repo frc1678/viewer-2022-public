@@ -1,5 +1,8 @@
 package com.example.viewer_2022.constants
 
+/**
+ * Class that contains translations from datapoint names to human-readable names.
+ */
 class Translations {
     companion object {
         val ACTUAL_TO_HUMAN_READABLE: Map<String, String> = mapOf(
@@ -91,7 +94,7 @@ class Translations {
             "climb_percent_success" to "Climb % Success",
             "lfm_climb_percent_success" to "Climb % Success",
             "confidence_rating" to "Confidence Rating",
-            "auto_low_balls" to "# Balls Low" ,
+            "auto_low_balls" to "# Balls Low",
             "tele_low_balls" to "# Balls Low",
             "intakes" to "# Intakes",
             "avg_climb_points" to "Avg Climb Pts",
@@ -126,7 +129,7 @@ class Translations {
             "4" to "other"
         )
 
-        val TIM_FROM_TEAM : Map<String, String> = mapOf(
+        val TIM_FROM_TEAM: Map<String, String> = mapOf(
             "auto_avg_low_balls" to "auto_low_balls",
             "auto_avg_high_balls" to "auto_high_balls",
             "auto_avg_total_balls" to "auto_total_balls",
@@ -152,9 +155,9 @@ class Translations {
             "avg_climb_points" to "climb_level",
             "climb_all_attempts" to "climb_level",
             "matches_played_defense" to "played_defense"
-            )
+        )
 
-        val TIM_TO_HUMAN_READABLE : Map<String, String> = mapOf(
+        val TIM_TO_HUMAN_READABLE: Map<String, String> = mapOf(
             "auto_avg_low_balls" to "Auto Balls Low",
             "auto_avg_high_balls" to "Auto Balls High",
             "auto_avg_total_balls" to "Auto Balls Total",

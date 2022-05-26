@@ -8,11 +8,14 @@ import com.example.viewer_2022.MainViewerActivity
 import com.example.viewer_2022.R
 import com.example.viewer_2022.constants.Constants
 import com.example.viewer_2022.data.Match
-import com.example.viewer_2022.fragments.match_schedule.match_details.MatchDetailsFragment
+import com.example.viewer_2022.fragments.match_details.MatchDetailsFragment
 import kotlinx.android.synthetic.main.fragment_match_schedule.view.*
 import kotlinx.android.synthetic.main.match_schedule_cell.view.*
 import com.example.viewer_2022.MainViewerActivity.StarredMatches
 
+/**
+ * Match schedule fragment with only starred matches
+ */
 class StarredMatchesFragment : MatchScheduleFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +41,8 @@ class StarredMatchesFragment : MatchScheduleFragment() {
         }
         // Mark matches as starred when long clicked.
         root.lv_match_schedule.setOnItemLongClickListener { _, _, position, _ ->
-            val cell = root.lv_match_schedule.adapter.getView(position, null, root.lv_match_schedule)
+            val cell =
+                root.lv_match_schedule.adapter.getView(position, null, root.lv_match_schedule)
             if (MainViewerActivity.starredMatches.contains(cell.tv_match_number.text.toString())) {
                 // The match is already starred.
                 MainViewerActivity.starredMatches.remove(cell.tv_match_number.text.toString())

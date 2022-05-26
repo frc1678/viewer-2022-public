@@ -8,10 +8,10 @@
         android:id="@+id/tv_team_list_header"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:gravity="center"
         android:text="Team List"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:textStyle="bold" />
 
     <View style="@style/view_separator_horizontal" />
 
@@ -19,10 +19,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+
         <TextView
             style="@style/tv_standard_gray"
             android:layout_weight="2"
-            android:text="Team Number"/>
+            android:text="Team Number" />
+
         <TextView
             style="@style/tv_standard_gray"
             android:layout_weight="5"
@@ -34,12 +36,10 @@
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/Black"
-        />
+        android:background="@color/Black" />
 
     <ListView
         android:id="@+id/lv_team_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 </LinearLayout>

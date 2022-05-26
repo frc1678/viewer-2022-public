@@ -9,7 +9,7 @@
 package com.example.viewer_2022.data
 
 // Data storage class for each individual team object.
-data class Team (var team_number: Int?) {
+data class Team(var team_number: Int?) {
     var team_name: String? = null
     var auto_line_successes: Int? = null
     var first_pickability: Float? = null

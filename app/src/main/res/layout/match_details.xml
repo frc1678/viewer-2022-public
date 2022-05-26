@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <View
         style="@style/view_separator_horizontal"
         android:layout_height="3dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,10 +68,10 @@
             android:id="@+id/tv_match_number_display"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/match_number_match_details"
             android:textSize="50sp"
-            android:layout_weight="2"
             android:textStyle="bold">
 
         </TextView>
@@ -139,52 +139,62 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
+
                     <TextView
                         style="@style/tv_team_number_match_details"
+                        android:layout_gravity="center"
                         android:layout_weight="2"
-                        android:text="Team"
-                        android:layout_gravity="center"/>
+                        android:text="Team" />
+
                     <TextView
                         android:id="@+id/tv_team_one_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Blue"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Blue" />
+
                     <TextView
                         android:id="@+id/tv_team_two_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Blue"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Blue" />
+
                     <TextView
                         android:id="@+id/tv_team_three_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Blue"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Blue" />
+
                     <TextView
                         android:id="@+id/tv_team_four_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Red"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Red" />
+
                     <TextView
                         android:id="@+id/tv_team_five_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Red"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Red" />
+
                     <TextView
                         android:id="@+id/tv_team_six_label"
                         style="@style/tv_team_number_match_details"
-                        android:textColor="@color/Red"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/Red" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -195,8 +205,8 @@
                         android:id="@+id/lv_match_details"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:layout_weight="2" />
 
                 </LinearLayout>
             </LinearLayout>

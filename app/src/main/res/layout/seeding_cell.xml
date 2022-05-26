@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:padding="@dimen/very_small"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/very_small">
 
     <TextView
-        style="@style/tv_standard_gray"
-        android:id="@+id/tv_datapoint_one"/>
+        android:id="@+id/tv_datapoint_one"
+        style="@style/tv_standard_gray" />
 
     <TextView
-        style="@style/tv_standard_black"
-        android:gravity="center"
         android:id="@+id/tv_team_number"
-        android:layout_weight="2"/>
+        style="@style/tv_standard_black"
+        android:layout_weight="2"
+        android:gravity="center" />
 
     <TextView
-        style="@style/tv_standard_gray"
         android:id="@+id/tv_datapoint_two"
-        android:layout_weight="2"/>
+        style="@style/tv_standard_gray"
+        android:layout_weight="2" />
 
     <TextView
-        style="@style/tv_standard_gray"
         android:id="@+id/tv_datapoint_three"
-        android:layout_weight="2"/>
+        style="@style/tv_standard_gray"
+        android:layout_weight="2" />
 
     <TextView
-        style="@style/tv_standard_gray"
         android:id="@+id/tv_datapoint_four"
-        android:layout_weight="2"/>
+        style="@style/tv_standard_gray"
+        android:layout_weight="2" />
 
     <TextView
-        style="@style/tv_standard_gray"
         android:id="@+id/tv_datapoint_five"
-        android:layout_weight = "2"/>
+        style="@style/tv_standard_gray"
+        android:layout_weight="2" />
 </LinearLayout>

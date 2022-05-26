@@ -10,7 +10,11 @@ import com.example.viewer_2022.getTeamDataValue
 import kotlinx.android.synthetic.main.pickability_cell.view.tv_team_number
 import kotlinx.android.synthetic.main.team_list_cell.view.*
 
-class TeamListAdapter(private val context: Context,  private val items: List<String>) : BaseAdapter() {
+/**
+ * Adapter for the team list fragment.
+ */
+class TeamListAdapter(private val context: Context, private val items: List<String>) :
+    BaseAdapter() {
     private val inflater = LayoutInflater.from(context)
     override fun getCount(): Int {
         return items.size;
@@ -29,7 +33,7 @@ class TeamListAdapter(private val context: Context,  private val items: List<Str
         val e = getItem(i)
         val rowView = inflater.inflate(R.layout.team_list_cell, parent, false)
         rowView.tv_team_number.text = e
-        rowView.tv_team_name.text = getTeamDataValue(e,"team_name")
+        rowView.tv_team_name.text = getTeamDataValue(e, "team_name")
         return rowView
     }
 

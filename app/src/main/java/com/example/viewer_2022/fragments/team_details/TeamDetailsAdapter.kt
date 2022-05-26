@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.team_details_cell.view.*
 import java.lang.Float.parseFloat
 import java.util.regex.Pattern
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import com.example.viewer_2022.MainViewerActivity
 import com.example.viewer_2022.fragments.match_schedule.MatchScheduleFragment
 import com.example.viewer_2022.fragments.notes.NotesFragment
@@ -55,7 +56,7 @@ class TeamDetailsAdapter(
     }
 
     // Populate the elements of the custom cell.
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val graphsFragment = GraphsFragment()
         val graphsFragmentArguments = Bundle()
         val e = getItem(position)
@@ -109,6 +110,9 @@ class TeamDetailsAdapter(
             rowView.tv_datapoint_value.text = ""
 
             if (e == "Notes") {
+                if (Constants.USE_TEST_DATA) {
+                    rowView.isVisible = false
+                }
                 Log.d("notes", "SETTING UP NOTES CELL IN TEAM DETAILS")
                 rowView.tv_datapoint_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
                 rowView.tv_datapoint_name.setBackgroundColor(context.resources.getColor(R.color.Highlighter))
@@ -140,14 +144,14 @@ class TeamDetailsAdapter(
                     )
                 ).matches()
             ) {
-                    rowView.tv_datapoint_value.text = ("%.2f").format(
-                        parseFloat(
-                            getTeamDataValue(
-                                teamNumber,
-                                e
-                            )
+                rowView.tv_datapoint_value.text = ("%.2f").format(
+                    parseFloat(
+                        getTeamDataValue(
+                            teamNumber,
+                            e
                         )
                     )
+                )
             } else {
                 rowView.tv_datapoint_value.text = getTeamDataValue(
                     teamNumber,
@@ -156,7 +160,10 @@ class TeamDetailsAdapter(
             }
         }
         if (e in Constants.RANKABLE_FIELDS) {
-            rowView.tv_ranking.text = if (e in Constants.PIT_DATA) "" else getRankingTeam(teamNumber, e).placement.toString()
+            rowView.tv_ranking.text = if (e in Constants.PIT_DATA) "" else getRankingTeam(
+                teamNumber,
+                e
+            ).placement.toString()
         }
 
         if (Constants.GRAPHABLE.contains(datapointsDisplayed[position]) or

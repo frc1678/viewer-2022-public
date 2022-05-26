@@ -15,6 +15,9 @@ import com.example.viewer_2022.getTeamDataValue
 import kotlinx.android.synthetic.main.team_ranking_cell.view.*
 import java.util.regex.Pattern
 
+/**
+ * Adapter for the team ranking list.
+ */
 class TeamRankingListAdapter(
     private val context: FragmentActivity,
     private val teamNumber: String?,

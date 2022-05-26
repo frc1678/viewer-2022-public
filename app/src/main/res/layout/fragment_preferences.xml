@@ -5,13 +5,13 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/tv_header"
         android:id="@+id/tv_preferences_header"
+        style="@style/tv_header"
         android:text="@string/preferences" />
 
     <TextView
         style="@style/tv_subheader"
-        android:text="@string/user_name"/>
+        android:text="@string/user_name" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,37 +20,36 @@
 
         <Spinner
             android:id="@+id/spin_user"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_margin="10dp" />
-        <Button
-            android:id="@+id/btn_user_pref_edit"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/btn_user_pref_edit"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:enabled="true"
             android:padding="20dp"
-            android:text="@string/edit"
-            android:enabled="true">
-        </Button>
+            android:text="@string/edit"></Button>
 
     </LinearLayout>
 
     <ToggleButton
+        android:id="@+id/tb_highlight_our_matches"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:id="@+id/tb_highlight_our_matches"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:checked="false"
         android:textOff="@string/highlight_our_matches_disabled"
         android:textOn="@string/highlight_our_matches_enabled"
-        android:checked="false">
-    </ToggleButton>
+        android:textSize="25sp"
+        android:textStyle="bold"></ToggleButton>
 
     <TextView
-        style="@style/version_number"
         android:id="@+id/tv_version_num"
-        android:text="@string/tv_version_num"/>
+        style="@style/version_number"
+        android:text="@string/tv_version_num" />
 
 </LinearLayout>

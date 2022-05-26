@@ -15,7 +15,9 @@ import com.example.viewer_2022.getRankingList
 import kotlinx.android.synthetic.main.fragment_team_ranking.view.*
 import kotlinx.android.synthetic.main.team_ranking_cell.view.*
 
-
+/**
+ * Fragment that shows the ranking of a specific datapoint
+ */
 class TeamRankingFragment : Fragment() {
     companion object {
         const val TEAM_NUMBER = "teamNumber"

@@ -10,7 +10,7 @@ package com.example.viewer_2022.data
 
 //Database reference class to make a database object from MongoDB.
 class DatabaseReference {
-    data class CompetitionObject (
+    data class CompetitionObject(
         var raw_obj_pit: MutableList<ObjectivePit> = mutableListOf(),
         var obj_tim: MutableList<CalculatedObjectiveTeamInMatch> = mutableListOf(),
         var obj_team: MutableList<CalculatedObjectiveTeam> = mutableListOf(),
@@ -24,7 +24,7 @@ class DatabaseReference {
         var subj_tim: MutableList<CalculatedSubjectiveTeamInMatch> = mutableListOf()
     )
 
-    data class ObjectivePit (
+    data class ObjectivePit(
         var team_number: Int,
         var drivetrain: Int, //value is an enum in schema
         var drivetrain_motors: Int,
@@ -38,7 +38,7 @@ class DatabaseReference {
     )
 
 
-    data class CalculatedPredictedAllianceInMatch (
+    data class CalculatedPredictedAllianceInMatch(
         var match_number: Int,
         var alliance_color_is_red: Boolean,
         var has_actual_data: Boolean,
@@ -56,25 +56,25 @@ class DatabaseReference {
         var win_chance: Float
     )
 
-    data class CalculatedTBATeam (
+    data class CalculatedTBATeam(
         var team_number: Int,
         var team_name: String,
         var auto_line_successes: Int
     )
 
-    data class CalculatedTBATeamInMatch (
+    data class CalculatedTBATeamInMatch(
         var match_number: Int,
         var team_number: Int,
         var auto_line: Boolean
     )
 
-    data class CalculatedPickAbilityTeam (
+    data class CalculatedPickAbilityTeam(
         var team_number: Int,
         var first_pickability: Float,
         var second_pickability: Float
     )
 
-    data class CalculatedPredictedTeam (
+    data class CalculatedPredictedTeam(
         var team_number: Int,
         var current_rank: Int,
         var current_rps: Int,
@@ -83,14 +83,14 @@ class DatabaseReference {
         var predicted_rank: Int
     )
 
-    data class CalculatedSubjectiveTeam (
+    data class CalculatedSubjectiveTeam(
         var team_number: Int,
         var driver_field_awareness: Float,
         var driver_quickness: Float,
         var driver_ability: Float
     )
 
-    data class CalculatedObjectiveTeam (
+    data class CalculatedObjectiveTeam(
         var team_number: Int,
         var auto_avg_low_balls: Float,
         var tele_avg_low_balls: Float,
@@ -148,7 +148,7 @@ class DatabaseReference {
         var avg_climb_points: Float,
     )
 
-    data class CalculatedObjectiveTeamInMatch (
+    data class CalculatedObjectiveTeamInMatch(
         var confidence_rating: Int,
         var team_number: Int,
         var match_number: Int,
@@ -171,11 +171,11 @@ class DatabaseReference {
         var second_rank: Int
     )
 
-    data class CalculatedSubjectiveTeamInMatch (
+    data class CalculatedSubjectiveTeamInMatch(
         var team_number: Int,
         var match_number: Int,
         var quickness_score: Int,
         var field_awareness_score: Int,
         var played_defense: Boolean,
-            )
+    )
 }

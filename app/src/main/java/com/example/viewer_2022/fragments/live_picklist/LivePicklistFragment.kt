@@ -92,8 +92,8 @@ class LivePicklistFragment : Fragment() {
 
     private fun setupEditButton() {
         binding.btnPicklistEdit.setOnClickListener {
-            if (PicklistConnectionManager.connected){
-                if(canEdit){
+            if (PicklistConnectionManager.connected) {
+                if (canEdit) {
                     lifecycleScope.launch {
                         val data = LogoutRequest()
                         val dataText = Gson().toJson(data)
@@ -111,7 +111,11 @@ class LivePicklistFragment : Fragment() {
                     }.show(fragmentManager!!, "edit_popup")
                 }
             } else {
-                Toast.makeText(context, "You must be connected to the picklist to edit.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "You must be connected to the picklist to edit.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -175,7 +179,14 @@ class LivePicklistFragment : Fragment() {
     private fun loginSuccess() {
         Log.d("picklist", "login success")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val toast = Toast.makeText(context, Html.fromHtml("<font color='#24850f'>Login successful</font>", Html.FROM_HTML_MODE_COMPACT), Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(
+                context,
+                Html.fromHtml(
+                    "<font color='#24850f'>Login successful</font>",
+                    Html.FROM_HTML_MODE_COMPACT
+                ),
+                Toast.LENGTH_SHORT
+            )
             toast.show()
         }
         canEdit = true
@@ -184,7 +195,14 @@ class LivePicklistFragment : Fragment() {
     private fun loginFailed() {
         Log.d("picklist", "login failed")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val toast = Toast.makeText(context, Html.fromHtml("<font color='#e61c0e'>Login failed</font>", Html.FROM_HTML_MODE_COMPACT), Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(
+                context,
+                Html.fromHtml(
+                    "<font color='#e61c0e'>Login failed</font>",
+                    Html.FROM_HTML_MODE_COMPACT
+                ),
+                Toast.LENGTH_SHORT
+            )
             toast.show()
 
         }
@@ -255,8 +273,11 @@ class LivePicklistFragment : Fragment() {
 
             }
 
-            override fun isLongPressDragEnabled(): Boolean = canEdit && PicklistConnectionManager.connected
-            override fun isItemViewSwipeEnabled(): Boolean = canEdit && PicklistConnectionManager.connected
+            override fun isLongPressDragEnabled(): Boolean =
+                canEdit && PicklistConnectionManager.connected
+
+            override fun isItemViewSwipeEnabled(): Boolean =
+                canEdit && PicklistConnectionManager.connected
 
         }
 
@@ -296,6 +317,7 @@ data class UpdateDataRequest(
     val to_place: Int,
     val from_place: Int
 )
+
 data class ToggleDNPRequest(val type: String = "dnp_update", val team_number: Int)
 data class LoginRequest(val type: String = "start_edit", val password: String)
 data class LogoutRequest(val type: String = "stop_edit")

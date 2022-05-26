@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
 val client = HttpClient {
     install(WebSockets)
     defaultRequest {
-        header("Authorization", "870035c623fe45479373bdccf3403228")
+        header("Authorization", "")
     }
 }
 
@@ -25,11 +25,11 @@ object PicklistConnectionManager {
     private var messageCallback: MutableList<((data: String) -> Unit)> = mutableListOf()
     private var connectionCallback: MutableList<((status: Boolean) -> Unit)> = mutableListOf()
 
-    fun addMessageListener(cb: ((data: String) -> Unit)){
+    fun addMessageListener(cb: ((data: String) -> Unit)) {
         messageCallback.add(cb)
     }
 
-    fun addConnectionListener(cb: ((status: Boolean) -> Unit)){
+    fun addConnectionListener(cb: ((status: Boolean) -> Unit)) {
         connectionCallback.add(cb)
     }
 
@@ -38,11 +38,11 @@ object PicklistConnectionManager {
     }
 
     suspend fun connect() {
-        if(webSocketSession == null || !connected){
+        if (webSocketSession == null || !connected) {
             Log.d("picklist", "connecting to websocket...")
             try {
                 client.wss(
-                    host = "grosbeak.captured.earth",
+                    host = "grosbeak.citruscircuits.org",
                     path = "/ws/picklist"
                 ) {
                     webSocketSession = this
@@ -54,7 +54,7 @@ object PicklistConnectionManager {
 
                     }
                 }
-            } catch (e: Throwable){
+            } catch (e: Throwable) {
                 Log.e("picklist", "Error with picklist socket: $e")
                 connected = false
             }
@@ -65,7 +65,7 @@ object PicklistConnectionManager {
         }
     }
 
-    suspend fun send(data: String){
+    suspend fun send(data: String) {
         webSocketSession?.send(data)
     }
 }

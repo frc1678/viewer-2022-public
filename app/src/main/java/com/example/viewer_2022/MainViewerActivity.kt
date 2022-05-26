@@ -11,8 +11,6 @@ package com.example.viewer_2022
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -20,7 +18,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -39,6 +36,7 @@ import com.example.viewer_2022.fragments.match_schedule.OurScheduleFragment
 import com.example.viewer_2022.fragments.match_schedule.StarredMatchesFragment
 import com.example.viewer_2022.fragments.pickability.PickabilityFragment
 import com.example.viewer_2022.fragments.pickability.PickabilityMode
+import com.example.viewer_2022.fragments.preferences.PreferencesFragment
 import com.example.viewer_2022.fragments.ranking.RankingFragment
 import com.example.viewer_2022.fragments.team_list.TeamListFragment
 import com.google.android.material.navigation.NavigationView
@@ -46,20 +44,16 @@ import com.google.gson.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.field_map_popup.view.*
 import kotlinx.android.synthetic.main.field_map_popup.view.close_button
-import kotlinx.android.synthetic.main.pit_map_popup.*
 import kotlinx.android.synthetic.main.pit_map_popup.view.*
-import kotlinx.android.synthetic.main.robot_pic.view.*
-import org.apache.commons.collections.map.HashedMap
 import java.io.*
 
 
-// Main activity class that handles the dual fragment view.
+// Main activity class that handles navigation.
 class MainViewerActivity : ViewerActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
 
     companion object {
-        var currentRankingMenuItem: MenuItem? = null
         var teamCache: HashMap<String, Team> = HashMap()
         var matchCache: MutableMap<String, Match> = HashMap()
         var timCache = object : HashSet<TeamInMatch>() {
@@ -97,7 +91,7 @@ class MainViewerActivity : ViewerActivity() {
         var mapMode = 1
         var mapRotation = -90F
 
-        fun updateNotesCache(){
+        fun updateNotesCache() {
             getAllNotes { notesList ->
                 val newMap = mutableMapOf<String, String>()
                 notesList.forEach {
@@ -126,8 +120,12 @@ class MainViewerActivity : ViewerActivity() {
     override fun onResume() {
         super.onResume()
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
             try {
                 ActivityCompat.requestPermissions(
                     this,
@@ -171,7 +169,7 @@ class MainViewerActivity : ViewerActivity() {
         toggle.syncState()
 
         (Constants.FIELDS_TO_BE_DISPLAYED_TEAM_DETAILS + Constants.FIELDS_TO_BE_DISPLAYED_LFM).forEach {
-            if(it !in Constants.CATEGORY_NAMES){
+            if (it !in Constants.CATEGORY_NAMES) {
                 createLeaderboard(it)
             }
         }
@@ -181,7 +179,9 @@ class MainViewerActivity : ViewerActivity() {
             updateNavFooter()
         }
 
-        updateNotesCache()
+        if (!Constants.USE_TEST_DATA){
+            updateNotesCache()
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val matchScheduleFragment = MatchScheduleFragment()
@@ -307,11 +307,11 @@ class MainViewerActivity : ViewerActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu) : Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.toolbar, menu)
-        val fieldMapItem : MenuItem = menu.findItem(R.id.field_map_button)
-        val pitMapItem : MenuItem = menu.findItem(R.id.pit_map_button)
+        val fieldMapItem: MenuItem = menu.findItem(R.id.field_map_button)
+        val pitMapItem: MenuItem = menu.findItem(R.id.pit_map_button)
         val fieldButton = fieldMapItem.actionView
         val pitButton = pitMapItem.actionView
 
@@ -321,14 +321,17 @@ class MainViewerActivity : ViewerActivity() {
             val height = LinearLayout.LayoutParams.MATCH_PARENT
             val popupWindow = PopupWindow(popupView, width, height, false)
 
-            var mapFile = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/",
-            "pit_map")
+            var mapFile = File(
+                "/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/",
+                "pit_map"
+            )
 
             if (mapFile!!.exists()) {
                 popupView.pit_map.setImageURI(mapFile.toUri())
             }
 
-            mapRotation = this.getSharedPreferences("VIEWER", 0).getFloat("mapRotation", mapRotation)
+            mapRotation =
+                this.getSharedPreferences("VIEWER", 0).getFloat("mapRotation", mapRotation)
 
             popupView.pit_map.rotation = mapRotation
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
@@ -351,7 +354,7 @@ class MainViewerActivity : ViewerActivity() {
             val height = LinearLayout.LayoutParams.MATCH_PARENT
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
-            when(mapMode){
+            when (mapMode) {
                 0 -> {
                     popupView.red_chip.isChecked = true
                     popupView.none_chip.isChecked = false
@@ -371,28 +374,28 @@ class MainViewerActivity : ViewerActivity() {
                     popupView.field_map.setImageResource(R.drawable.field_map_blue)
                 }
             }
-            popupView.red_chip.setOnClickListener{
+            popupView.red_chip.setOnClickListener {
                 popupView.red_chip.isChecked = true
             }
-            popupView.blue_chip.setOnClickListener{
+            popupView.blue_chip.setOnClickListener {
                 popupView.blue_chip.isChecked = true
             }
-            popupView.none_chip.setOnClickListener{
+            popupView.none_chip.setOnClickListener {
                 popupView.none_chip.isChecked = true
             }
             popupView.chip_group.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     popupView.red_chip.id -> {
                         popupView.field_map.setImageResource(R.drawable.field_map_red)
-                        mapMode=0
+                        mapMode = 0
                     }
                     popupView.none_chip.id -> {
                         popupView.field_map.setImageResource(R.drawable.field_map)
-                        mapMode=1
+                        mapMode = 1
                     }
                     popupView.blue_chip.id -> {
                         popupView.field_map.setImageResource(R.drawable.field_map_blue)
-                        mapMode=2
+                        mapMode = 2
                     }
                 }
                 return@setOnCheckedChangeListener
@@ -404,9 +407,9 @@ class MainViewerActivity : ViewerActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun updateNavFooter(){
+    fun updateNavFooter() {
         val footer = findViewById<TextView>(R.id.nav_footer)
-        if(Constants.USE_TEST_DATA){
+        if (Constants.USE_TEST_DATA) {
             footer.text = getString(R.string.test_data)
 
         } else {
@@ -419,14 +422,16 @@ class MainViewerActivity : ViewerActivity() {
         var contents: JsonObject? = null
         var gson = Gson()
 
-        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/viewer_user_data_prefs.json")
+        private val file =
+            File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/viewer_user_data_prefs.json")
 
         fun read(context: Context) {
-            if (!fileExists()){
+            if (!fileExists()) {
                 copyDefaults(context)
             }
-            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
-            catch (e: Exception) {
+            try {
+                contents = JsonParser.parseReader(FileReader(file)).asJsonObject
+            } catch (e: Exception) {
                 Log.e("UserDatapoints.read", "Failed to read user datapoints file")
             }
         }
@@ -440,11 +445,11 @@ class MainViewerActivity : ViewerActivity() {
 
         fun fileExists(): Boolean = file.exists()
 
-        fun copyDefaults(context: Context){
-            val inputStream : InputStream = context.resources.openRawResource(R.raw.default_prefs)
+        fun copyDefaults(context: Context) {
+            val inputStream: InputStream = context.resources.openRawResource(R.raw.default_prefs)
 
             try {
-                val outputStream : OutputStream = FileOutputStream(file)
+                val outputStream: OutputStream = FileOutputStream(file)
 
                 val buffer = ByteArray(1024)
                 var len: Int? = null
@@ -472,14 +477,16 @@ class MainViewerActivity : ViewerActivity() {
             return@filter it.value.blueTeams.contains("1678") or it.value.redTeams.contains("1678")
         }.map { return@map it.value.matchNumber }
 
-        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/viewer_starred_matches.json")
+        private val file =
+            File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/viewer_starred_matches.json")
 
         fun read() {
-            if (!fileExists()){
+            if (!fileExists()) {
                 write()
             }
-            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
-            catch (e: Exception) {
+            try {
+                contents = JsonParser.parseReader(FileReader(file)).asJsonObject
+            } catch (e: Exception) {
                 Log.e("StarredMatches.read", "Failed to read starred matches file")
             }
         }
@@ -509,12 +516,15 @@ class MainViewerActivity : ViewerActivity() {
 
 }
 
-class NavDrawerListener(private val navView: NavigationView, private val fragManager: FragmentManager) : DrawerLayout.DrawerListener {
+class NavDrawerListener(
+    private val navView: NavigationView,
+    private val fragManager: FragmentManager
+) : DrawerLayout.DrawerListener {
     override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
     override fun onDrawerOpened(drawerView: View) {}
     override fun onDrawerClosed(drawerView: View) {}
     override fun onDrawerStateChanged(newState: Int) {
-        if(newState == ViewDragHelper.STATE_SETTLING){
+        if (newState == ViewDragHelper.STATE_SETTLING) {
             when (fragManager.fragments.last().tag) {
                 "matchSchedule" -> navView.setCheckedItem(R.id.nav_menu_match_schedule)
                 "ourSchedule" -> navView.setCheckedItem(R.id.nav_menu_our_match_schedule)

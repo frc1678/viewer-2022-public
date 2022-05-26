@@ -13,7 +13,14 @@ import java.io.*
 import java.util.*
 
 
-class GetDataFromFiles(var context:Context, val onCompleted: () -> Unit = {} ,val onError: (error: String) -> Unit = {}) :
+/**
+ * Async task to get data from test data files
+ */
+class GetDataFromFiles(
+    var context: Context,
+    val onCompleted: () -> Unit = {},
+    val onError: (error: String) -> Unit = {}
+) :
     AsyncTask<String, String, String>() {
 
     override fun doInBackground(vararg p0: String?): String {
@@ -23,11 +30,13 @@ class GetDataFromFiles(var context:Context, val onCompleted: () -> Unit = {} ,va
             for (x in 0..9) {
                 when (x) {
                     0 -> databaseReference?.raw_obj_pit = Gson().fromJson(
-                            readFile(context.getResources().openRawResource(R.raw.raw_obj_pit)),
-                                    Array<DatabaseReference.ObjectivePit>::class.java).toMutableList()
+                        readFile(context.getResources().openRawResource(R.raw.raw_obj_pit)),
+                        Array<DatabaseReference.ObjectivePit>::class.java
+                    ).toMutableList()
                     1 -> databaseReference?.tba_tim = Gson().fromJson(
                         readFile(context.getResources().openRawResource(R.raw.calc_tba_tim)),
-                        Array<DatabaseReference.CalculatedTBATeamInMatch>::class.java).toMutableList()
+                        Array<DatabaseReference.CalculatedTBATeamInMatch>::class.java
+                    ).toMutableList()
                     2 -> databaseReference?.obj_tim = Gson().fromJson(
                         readFile(context.getResources().openRawResource(R.raw.calc_obj_tim)),
                         Array<DatabaseReference.CalculatedObjectiveTeamInMatch>::class.java
@@ -61,7 +70,7 @@ class GetDataFromFiles(var context:Context, val onCompleted: () -> Unit = {} ,va
                         Array<DatabaseReference.PicklistTeam>::class.java
                     ).toMutableList()
                 }
-                Log.e("databaseReference","$databaseReference")
+                Log.e("databaseReference", "$databaseReference")
             }
 
             val rawMatchSchedule: MutableMap<String, Website.WebsiteMatch> = Gson().fromJson(
@@ -106,7 +115,8 @@ class GetDataFromFiles(var context:Context, val onCompleted: () -> Unit = {} ,va
         onCompleted()
     }
 }
-private fun readFile(file:InputStream):String {
+
+private fun readFile(file: InputStream): String {
     val `is`: InputStream = file
     val writer: Writer = StringWriter()
     val buffer = CharArray(1024)

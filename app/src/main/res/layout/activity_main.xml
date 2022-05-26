@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MainViewerActivity"
     tools:showIn="@layout/activity_main">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,13 +18,13 @@
             android:id="@+id/view_separator"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/Black"/>
+            android:background="@color/Black" />
 
         <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -31,28 +32,30 @@
         android:id="@+id/navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:itemTextColor="@color/drawer_item"
-        app:itemIconTint="@color/drawer_item"
-        app:itemBackground="@android:color/transparent"
-        app:menu="@menu/navigation_menu"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         android:paddingBottom="@dimen/small"
-        android:fitsSystemWindows="true" >
+        app:itemBackground="@android:color/transparent"
+        app:itemIconTint="@color/drawer_item"
+        app:itemTextColor="@color/drawer_item"
+        app:menu="@menu/navigation_menu">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
 
-            <TextView style="@style/tv_standard_gray"
+            <TextView
                 android:id="@+id/nav_footer"
+                style="@style/tv_standard_gray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="start"
+                android:lineSpacingExtra="@dimen/very_small"
                 android:paddingStart="@dimen/small"
                 android:paddingEnd="@dimen/small"
-                android:lineSpacingExtra="@dimen/very_small"
                 android:text="Footer" />
 
         </LinearLayout>

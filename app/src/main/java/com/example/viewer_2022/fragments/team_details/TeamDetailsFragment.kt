@@ -84,7 +84,7 @@ class TeamDetailsFragment : Fragment() {
             datapointsDisplayed = Constants.FIELDS_TO_BE_DISPLAYED_TEAM_DETAILS,
             teamNumber = teamNumber!!
         )
-        if(refreshId == null){
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: team-details")
                 adapter.notifyDataSetChanged()
@@ -92,7 +92,7 @@ class TeamDetailsFragment : Fragment() {
         }
         root.lv_datapoint_display.adapter = adapter
 // Repopulates the list view based on whether LFM is toggled or not
-        root.btn_lfm.setOnClickListener{
+        root.btn_lfm.setOnClickListener {
             if (!isChecked) {
                 isChecked = true
                 dataDisplay = Constants.FIELDS_TO_BE_DISPLAYED_LFM
@@ -113,7 +113,7 @@ class TeamDetailsFragment : Fragment() {
         }
     }
 
-    private fun robotPics(root: View){
+    private fun robotPics(root: View) {
         val robotPicFragmentArguments = Bundle()
         val robotPicFragment = RobotPicFragment()
         if (!File(

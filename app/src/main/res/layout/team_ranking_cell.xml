@@ -3,29 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:orientation="horizontal">
-    <TextView
-        style="@style/tv_standard_black"
-        android:layout_weight="1"
 
+    <TextView
         android:id="@+id/tv_team_ranking"
-        android:text="rank"
+        style="@style/tv_standard_black"
+
+        android:layout_weight="1"
         android:gravity="center"
-        />
+        android:text="rank" />
+
     <TextView
+        android:id="@+id/tv_team_number_ranking"
         style="@style/tv_standard_black"
         android:layout_weight="1"
-        android:id="@+id/tv_team_number_ranking"
-        android:text="team number"
         android:gravity="center"
+        android:text="team number"
 
         />
+
     <TextView
-        style="@style/tv_standard_black"
-        android:layout_weight="1"
         android:id="@+id/tv_value_ranking"
-        android:text="value"
-        android:gravity="right|center_vertical"
+        style="@style/tv_standard_black"
         android:layout_marginRight="@dimen/very_small"
-        />
+        android:layout_weight="1"
+        android:gravity="right|center_vertical"
+        android:text="value" />
 
 </LinearLayout>

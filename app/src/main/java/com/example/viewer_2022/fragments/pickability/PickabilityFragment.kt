@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_ranking.view.*
 import java.lang.ClassCastException
 import java.util.Comparator
 
+/**
+ * Page that ranks the pickability of each team. Previously allowed for first pickability and second pickability
+ */
 class PickabilityFragment(val mode: PickabilityMode) : Fragment() {
     private val teamDetailsFragment = TeamDetailsFragment()
     private val teamDetailsFragmentArguments = Bundle()
@@ -27,13 +30,15 @@ class PickabilityFragment(val mode: PickabilityMode) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_pickability, container, false)
-        root.tv_pickability_header.text = mode.toString().toLowerCase().capitalize() + " Pickability"
-        val map : Map<String, Float> = updateMatchScheduleListView(root)
+        root.tv_pickability_header.text =
+            mode.toString().toLowerCase().capitalize() + " Pickability"
+        val map: Map<String, Float> = updateMatchScheduleListView(root)
 
         root.lv_pickability.setOnItemClickListener { _, _, position, _ ->
-            val list : List<String> = map.keys.toList()
+            val list: List<String> = map.keys.toList()
             val pickabilityFragmentTransaction = this.fragmentManager!!.beginTransaction()
-            teamDetailsFragmentArguments.putString(Constants.TEAM_NUMBER,
+            teamDetailsFragmentArguments.putString(
+                Constants.TEAM_NUMBER,
                 list[position]
             )
             teamDetailsFragment.arguments = teamDetailsFragmentArguments
@@ -47,14 +52,14 @@ class PickabilityFragment(val mode: PickabilityMode) : Fragment() {
         return root
     }
 
-    private fun updateMatchScheduleListView(root: View) : Map<String, Float>{
+    private fun updateMatchScheduleListView(root: View): Map<String, Float> {
         val map = makeData()
         val adapter = PickabilityListAdapter(
             items = map,
             context = activity!!,
             mode = mode
         )
-        if(refreshId == null) {
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: Pickability")
                 adapter.items = makeData()
@@ -73,16 +78,18 @@ class PickabilityFragment(val mode: PickabilityMode) : Fragment() {
             MainViewerActivity.teamList
         )
 
-        rawTeamNumbers.forEach { e -> map[e] = try {
-            getTeamDataValue(
-                e,
-                (if (mode == PickabilityMode.FIRST) "first_pickability" else "second_pickability")
-            ).toFloat()
-        } catch (e: Exception) {
-            (-1000).toFloat()
-        } }
+        rawTeamNumbers.forEach { e ->
+            map[e] = try {
+                getTeamDataValue(
+                    e,
+                    (if (mode == PickabilityMode.FIRST) "first_pickability" else "second_pickability")
+                ).toFloat()
+            } catch (e: Exception) {
+                (-1000).toFloat()
+            }
+        }
 
-        map = map.toList().sortedBy {(k, v) ->
+        map = map.toList().sortedBy { (k, v) ->
 
 
             (v)
@@ -95,6 +102,7 @@ class PickabilityFragment(val mode: PickabilityMode) : Fragment() {
         MainViewerActivity.refreshManager.removeRefreshListener(refreshId)
     }
 }
+
 enum class PickabilityMode {
     FIRST,
     SECOND

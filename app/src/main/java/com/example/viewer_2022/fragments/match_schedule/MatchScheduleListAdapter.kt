@@ -18,19 +18,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.FragmentActivity
 import com.example.viewer_2022.*
 import com.example.viewer_2022.data.Match
 import com.example.viewer_2022.constants.Constants
 import com.example.viewer_2022.R
-import com.example.viewer_2022.fragments.match_schedule.match_details.MatchDetailsFragment
-import kotlinx.android.synthetic.main.fragment_match_schedule.view.*
-import kotlinx.android.synthetic.main.match_details_cell.view.*
-import kotlinx.android.synthetic.main.match_schedule_cell.view.*
+import com.example.viewer_2022.fragments.match_details.MatchDetailsFragment
 import java.lang.Float.parseFloat
 import com.example.viewer_2022.MainViewerActivity.StarredMatches
-import com.google.gson.JsonArray
 
 // Custom list adapter class with Match object handling to display the custom cell for the match schedule.
 class MatchScheduleListAdapter(
@@ -56,7 +51,7 @@ class MatchScheduleListAdapter(
         }
     }
 
-    fun updateData (newData: Map<String, Match>, oneTeam: Constants.ScheduleType) {
+    fun updateData(newData: Map<String, Match>, oneTeam: Constants.ScheduleType) {
         matchContents = newData
         scheduleType = oneTeam
         notifyDataSetChanged()
@@ -96,13 +91,17 @@ class MatchScheduleListAdapter(
         if (getAllianceInMatchObjectByKey(
                 Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                 Constants.RED, matchNumber,
-                "has_actual_data").toBoolean()){
+                "has_actual_data"
+            ).toBoolean()
+        ) {
             redAct = true
         }
         if (getAllianceInMatchObjectByKey(
                 Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                 Constants.BLUE, matchNumber,
-                "has_actual_data").toBoolean()){
+                "has_actual_data"
+            ).toBoolean()
+        ) {
             blueAct = true
         }
 
@@ -139,7 +138,7 @@ class MatchScheduleListAdapter(
         }
         viewHolder.tvMatchNumber.text = matchNumber
 
-        if(blueAct && redAct) {
+        if (blueAct && redAct) {
             if (getAllianceInMatchObjectByKey(
                     Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                     Constants.RED, matchNumber, "won_match"
@@ -154,8 +153,7 @@ class MatchScheduleListAdapter(
                     tv.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                     tv.setTypeface(Typeface.DEFAULT_BOLD)
                 }
-            }
-            else {
+            } else {
                 for (tv in listOf(
                     viewHolder.tvBlueTeamOne,
                     viewHolder.tvBlueTeamTwo,
@@ -167,36 +165,39 @@ class MatchScheduleListAdapter(
             }
         }
 
-        val field : String
+        val field: String
 
         if (redAct && blueAct) {
             field = "actual_rp"
-            viewHolder.wholeLine.setBackgroundColor(ContextCompat.getColor(
-                context,
-                R.color.LightGray
-            ))
-        } else{
+            viewHolder.wholeLine.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.LightGray
+                )
+            )
+        } else {
             field = "predicted_rp"
-            viewHolder.wholeLine.setBackgroundColor(ContextCompat.getColor(
-                context,
-                R.color.White
-            ))
+            viewHolder.wholeLine.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.White
+                )
+            )
         }
 
         if ((!blueAct or !redAct) && MainViewerActivity.matchCache[matchNumber]!!.bluePredictedScore != null) {
             viewHolder.tvBluePredictedScore.text =
                 MainViewerActivity.matchCache[matchNumber]!!.bluePredictedScore.toString()
-        } else if (blueAct && redAct && MainViewerActivity.matchCache[matchNumber]!!.blueActualScore != null){
+        } else if (blueAct && redAct && MainViewerActivity.matchCache[matchNumber]!!.blueActualScore != null) {
             viewHolder.tvBluePredictedScore.text =
                 (if (blueAct) "%.0f" else "%.1f").format(MainViewerActivity.matchCache[matchNumber]!!.blueActualScore)
-        }
-        else {
+        } else {
             val value = if (blueAct && redAct) {
                 getAllianceInMatchObjectByKey(
                     Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                     Constants.BLUE, matchNumber, "actual_score"
                 )
-            } else{
+            } else {
                 getAllianceInMatchObjectByKey(
                     Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                     Constants.BLUE, matchNumber, "predicted_score"
@@ -205,10 +206,10 @@ class MatchScheduleListAdapter(
             if (value != Constants.NULL_CHARACTER) {
                 viewHolder.tvBluePredictedScore.text =
                     (if (blueAct) "%.0f" else "%.1f").format(value.toFloat())
-                if(!blueAct or !redAct) {
+                if (!blueAct or !redAct) {
                     MainViewerActivity.matchCache[matchNumber]!!.bluePredictedScore =
                         parseFloat(("%.1f").format(value.toFloat()))
-                }else{
+                } else {
                     MainViewerActivity.matchCache[matchNumber]!!.blueActualScore =
                         parseFloat(("%.0f").format(value.toFloat()))
                 }
@@ -221,7 +222,7 @@ class MatchScheduleListAdapter(
         if ((!redAct or !blueAct) && MainViewerActivity.matchCache[matchNumber]!!.redPredictedScore != null) {
             viewHolder.tvRedPredictedScore.text =
                 MainViewerActivity.matchCache[matchNumber]!!.redPredictedScore.toString()
-        }else if (redAct && blueAct && MainViewerActivity.matchCache[matchNumber]!!.redActualScore != null) {
+        } else if (redAct && blueAct && MainViewerActivity.matchCache[matchNumber]!!.redActualScore != null) {
             viewHolder.tvRedPredictedScore.text =
                 (if (redAct) "%.0f" else "%.1f").format(MainViewerActivity.matchCache[matchNumber]!!.redActualScore)
         } else {
@@ -230,7 +231,7 @@ class MatchScheduleListAdapter(
                     Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                     Constants.RED, matchNumber, "actual_score"
                 )
-            } else{
+            } else {
                 getAllianceInMatchObjectByKey(
                     Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                     Constants.RED, matchNumber, "predicted_score"
@@ -242,7 +243,7 @@ class MatchScheduleListAdapter(
                 if (!redAct or !blueAct) {
                     MainViewerActivity.matchCache[matchNumber]!!.redPredictedScore =
                         parseFloat(("%.1f").format(value.toFloat()))
-                }else{
+                } else {
                     MainViewerActivity.matchCache[matchNumber]!!.redActualScore =
                         parseFloat(("%.0f").format(value.toFloat()))
                 }
@@ -286,10 +287,10 @@ class MatchScheduleListAdapter(
                             tv.setImageResource(R.drawable.cargo_ball)
                             continue@red_predicted
                         }
-                    }else if (MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPOne != null &&
-                            MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPOne!!.toDouble() >
-                            Constants.PREDICTED_RANKING_POINT_QUALIFICATION
-                        ) {
+                    } else if (MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPOne != null &&
+                        MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPOne!!.toDouble() >
+                        Constants.PREDICTED_RANKING_POINT_QUALIFICATION
+                    ) {
                         tv.setImageResource(R.drawable.cargo_ball)
                         continue@red_predicted
                     }
@@ -298,27 +299,29 @@ class MatchScheduleListAdapter(
                     if (redAct && blueAct) {
                         if (MainViewerActivity.matchCache[matchNumber]!!.redActualRPTwo != null &&
                             MainViewerActivity.matchCache[matchNumber]!!.redActualRPTwo!!.toDouble() >
-                            Constants.PREDICTED_RANKING_POINT_QUALIFICATION) {
-                            tv.setImageResource(R.drawable.pull_up_bars)
-                            continue@red_predicted
-                        }
-                    }
-                    else if (MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPTwo != null &&
-                            MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPTwo!!.toDouble() >
                             Constants.PREDICTED_RANKING_POINT_QUALIFICATION
                         ) {
                             tv.setImageResource(R.drawable.pull_up_bars)
                             continue@red_predicted
                         }
+                    } else if (MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPTwo != null &&
+                        MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPTwo!!.toDouble() >
+                        Constants.PREDICTED_RANKING_POINT_QUALIFICATION
+                    ) {
+                        tv.setImageResource(R.drawable.pull_up_bars)
+                        continue@red_predicted
+                    }
                 }
             }
             val value = getAllianceInMatchObjectByKey(
                 Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                 Constants.RED, matchNumber, field +
-                        "${listOf(
-                            viewHolder.tvRedPredictedRPOne,
-                            viewHolder.tvRedPredictedRPTwo
-                        ).indexOf(tv) + 1}"
+                        "${
+                            listOf(
+                                viewHolder.tvRedPredictedRPOne,
+                                viewHolder.tvRedPredictedRPTwo
+                            ).indexOf(tv) + 1
+                        }"
             )
             if (value != Constants.NULL_CHARACTER &&
                 value.toDouble() > Constants.PREDICTED_RANKING_POINT_QUALIFICATION
@@ -328,19 +331,19 @@ class MatchScheduleListAdapter(
                     viewHolder.tvRedPredictedRPTwo
                 ).indexOf(tv)) {
                     0 -> {
-                        if(redAct && blueAct){
+                        if (redAct && blueAct) {
                             MainViewerActivity.matchCache[matchNumber]!!.redActualRPOne =
                                 parseFloat(("%.0f").format(value.toFloat()))
-                        }else{
+                        } else {
                             MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPOne =
                                 parseFloat(("%.1f").format(value.toFloat()))
                         }
                     }
                     1 -> {
-                        if(redAct && blueAct){
+                        if (redAct && blueAct) {
                             MainViewerActivity.matchCache[matchNumber]!!.redActualRPTwo =
                                 parseFloat(("%.0f").format(value.toFloat()))
-                        }else{
+                        } else {
                             MainViewerActivity.matchCache[matchNumber]!!.redPredictedRPTwo =
                                 parseFloat(("%.1f").format(value.toFloat()))
                         }
@@ -360,17 +363,18 @@ class MatchScheduleListAdapter(
                     if (blueAct && redAct) {
                         if (MainViewerActivity.matchCache[matchNumber]!!.blueActualRPOne != null &&
                             MainViewerActivity.matchCache[matchNumber]!!.blueActualRPOne!!.toDouble() >
-                            Constants.PREDICTED_RANKING_POINT_QUALIFICATION) {
-                            tv.setImageResource(R.drawable.cargo_ball)
-                            continue@blue_predicted
-                        }
-                    } else if (MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPOne != null &&
-                            MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPOne!!.toDouble() >
                             Constants.PREDICTED_RANKING_POINT_QUALIFICATION
                         ) {
                             tv.setImageResource(R.drawable.cargo_ball)
                             continue@blue_predicted
                         }
+                    } else if (MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPOne != null &&
+                        MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPOne!!.toDouble() >
+                        Constants.PREDICTED_RANKING_POINT_QUALIFICATION
+                    ) {
+                        tv.setImageResource(R.drawable.cargo_ball)
+                        continue@blue_predicted
+                    }
                 }
                 1 -> {
                     if (blueAct && redAct) {
@@ -382,21 +386,23 @@ class MatchScheduleListAdapter(
                             continue@blue_predicted
                         }
                     } else if (MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPTwo != null &&
-                            MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPTwo!!.toDouble() >
-                            Constants.PREDICTED_RANKING_POINT_QUALIFICATION
-                        ) {
-                            tv.setImageResource(R.drawable.pull_up_bars)
-                            continue@blue_predicted
-                        }
+                        MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPTwo!!.toDouble() >
+                        Constants.PREDICTED_RANKING_POINT_QUALIFICATION
+                    ) {
+                        tv.setImageResource(R.drawable.pull_up_bars)
+                        continue@blue_predicted
+                    }
                 }
             }
             val value = getAllianceInMatchObjectByKey(
                 Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_ALLIANCE_IN_MATCH.value,
                 Constants.BLUE, matchNumber, field +
-                        "${listOf(
-                            viewHolder.tvBluePredictedRPOne,
-                            viewHolder.tvBluePredictedRPTwo
-                        ).indexOf(tv) + 1}"
+                        "${
+                            listOf(
+                                viewHolder.tvBluePredictedRPOne,
+                                viewHolder.tvBluePredictedRPTwo
+                            ).indexOf(tv) + 1
+                        }"
             )
             if (value != Constants.NULL_CHARACTER &&
                 value.toDouble() > Constants.PREDICTED_RANKING_POINT_QUALIFICATION
@@ -406,19 +412,19 @@ class MatchScheduleListAdapter(
                     viewHolder.tvBluePredictedRPTwo
                 ).indexOf(tv)) {
                     0 -> {
-                        if (redAct && blueAct){
+                        if (redAct && blueAct) {
                             MainViewerActivity.matchCache[matchNumber]!!.blueActualRPOne =
                                 parseFloat(("%.0f").format(value.toFloat()))
-                        }else{
+                        } else {
                             MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPOne =
                                 parseFloat(("%.1f").format(value.toFloat()))
                         }
                     }
                     1 -> {
-                        if(redAct && blueAct){
+                        if (redAct && blueAct) {
                             MainViewerActivity.matchCache[matchNumber]!!.blueActualRPTwo =
                                 parseFloat(("%.0f").format(value.toFloat()))
-                        }else{
+                        } else {
                             MainViewerActivity.matchCache[matchNumber]!!.bluePredictedRPTwo =
                                 parseFloat(("%.1f").format(value.toFloat()))
                         }
@@ -427,22 +433,26 @@ class MatchScheduleListAdapter(
             } else tv.setImageDrawable(null)
         }
         if (MainViewerActivity.starredMatches.contains(matchNumber)) {
-            viewHolder.wholeLine.setBackgroundColor(ContextCompat.getColor(context,
-                if (redAct && blueAct) R.color.DarkYellow
-                else R.color.Yellow
-            ))
+            viewHolder.wholeLine.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    if (redAct && blueAct) R.color.DarkYellow
+                    else R.color.Yellow
+                )
+            )
         }
 
-        fun matchClick(it : View){
+        fun matchClick(it: View) {
             val matchDetailsFragment = MatchDetailsFragment()
             Log.d("data-refresh", "created MatchDetailsFragment in MatchSchedule")
             val matchDetailsFragmentArguments = Bundle()
             val matchDetailsFragmentTransaction = context.supportFragmentManager.beginTransaction()
-            val matchSelected = if ((scheduleType==Constants.ScheduleType.OUR_MATCHES) or (scheduleType==Constants.ScheduleType.STARRED_MATCHES)){
-                matchContents.keys.toList()[position].toInt()
-            } else{
-                position + 1
-            }
+            val matchSelected =
+                if ((scheduleType == Constants.ScheduleType.OUR_MATCHES) or (scheduleType == Constants.ScheduleType.STARRED_MATCHES)) {
+                    matchContents.keys.toList()[position].toInt()
+                } else {
+                    position + 1
+                }
             matchDetailsFragmentArguments.putInt(Constants.MATCH_NUMBER, matchSelected)
             matchDetailsFragment.arguments = matchDetailsFragmentArguments
             matchDetailsFragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
@@ -452,7 +462,7 @@ class MatchScheduleListAdapter(
             ).commit()
         }
 
-        fun teamLongClick(selected : Button, it : View){
+        fun teamLongClick(selected: Button, it: View) {
             val teamNumber = selected.text.toString()
             val matchScheduleFragment = MatchScheduleFragment()
             val matchScheduleFragmentArguments = Bundle()

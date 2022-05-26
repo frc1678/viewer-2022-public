@@ -1,24 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_team_number"
+        style="@style/tv_team_number_team_details"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="25sp"
-        android:id="@+id/tv_team_number"
-        style="@style/tv_team_number_team_details"/>
+        android:textSize="25sp" />
 
     <TextView
+        android:id="@+id/tv_datapoint"
+        style="@style/tv_team_number_team_details_sub"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.75"
-        android:textSize="17sp"
-        android:id="@+id/tv_datapoint"
-        style="@style/tv_team_number_team_details_sub"/>
+        android:textSize="17sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,9 +30,8 @@
             android:id="@+id/bar_chart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="12"
             android:layout_marginRight="@dimen/very_small"
-            />
+            android:layout_weight="12" />
 
     </LinearLayout>
 
@@ -40,10 +39,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Match Number"
-        android:textSize="14sp"
-        android:textColor="@color/Black"
+        android:gravity="center_horizontal"
         android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:gravity="center_horizontal"/>
+        android:text="Match Number"
+        android:textColor="@color/Black"
+        android:textSize="14sp" />
 
 </LinearLayout>

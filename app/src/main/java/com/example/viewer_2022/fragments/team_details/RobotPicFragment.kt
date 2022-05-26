@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.team_details.view.tv_team_name
 import kotlinx.android.synthetic.main.team_details.view.tv_team_number
 import java.io.File
 
+
+/**
+ * Page for showing robot pictures
+ */
 class RobotPicFragment : Fragment() {
     private var teamNumber: String? = null
     private var teamName: String? = null

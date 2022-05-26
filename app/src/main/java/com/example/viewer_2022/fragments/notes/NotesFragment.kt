@@ -19,6 +19,9 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * Page that displays strategist notes
+ */
 class NotesFragment : Fragment() {
 
     var mode = Mode.VIEW
@@ -36,9 +39,9 @@ class NotesFragment : Fragment() {
         arguments?.let {
             teamNumber = it.getString(Constants.TEAM_NUMBER)
         }
-        if(refreshId == null){
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
-                if(this.mode == Mode.VIEW){
+                if (this.mode == Mode.VIEW) {
                     getNotes(root)
                 }
             }
@@ -52,7 +55,7 @@ class NotesFragment : Fragment() {
 
     private fun setupListeners(root: View) {
         root.btn_edit_notes.setOnClickListener {
-            mode = when(mode) {
+            mode = when (mode) {
                 Mode.VIEW -> {
                     setupEditMode(root)
                     Mode.EDIT
@@ -65,12 +68,12 @@ class NotesFragment : Fragment() {
         }
     }
 
-    private fun setupEditMode(root: View){
+    private fun setupEditMode(root: View) {
         root.btn_edit_notes.setImageResource(R.drawable.ic_baseline_save_24)
         root.et_notes.isEnabled = true
     }
 
-    private fun setupViewMode(root: View){
+    private fun setupViewMode(root: View) {
         root.btn_edit_notes.setImageResource(R.drawable.ic_baseline_edit_24)
         root.et_notes.isEnabled = false
         val data = SetNotesData(teamNumber!!, root.et_notes.text.toString())
@@ -81,23 +84,26 @@ class NotesFragment : Fragment() {
             PostRequestTask("notes/", Gson().toJson(data)) {
                 root.btn_edit_notes.isEnabled = true
             }.execute()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("NOTES", "FAILED TO SAVE NOTES. WE JUST LOST DATA. FIX IMMEDIATELY")
         }
 
     }
 
-    private fun getNotes(root: View){
+    private fun getNotes(root: View) {
         root.btn_edit_notes.isEnabled = false
         try {
             GetRequestTask("notes/$teamNumber") {
                 try {
                     val resp = Gson().fromJson(it, GetNotesData::class.java)
-                    if(resp.success){
+                    if (resp.success) {
                         root.et_notes.setText(resp.notes)
                     }
                 } catch (e: Exception) {
-                    Log.e("notes", "FAILED TO PARSE JSON FOR $teamNumber. THIS IS NOT GOOD. VERY VERY BAD. CARDINAL PROBABLY THREW A 500")
+                    Log.e(
+                        "notes",
+                        "FAILED TO PARSE JSON FOR $teamNumber. THIS IS NOT GOOD. VERY VERY BAD. CARDINAL PROBABLY THREW A 500"
+                    )
                 }
                 root.btn_edit_notes.isEnabled = true
             }.execute()
@@ -120,5 +126,7 @@ class NotesFragment : Fragment() {
 
 data class NotesData(val team_number: String, val notes: String)
 typealias SetNotesData = NotesData
+
 data class GetNotesData(val success: Boolean, val notes: String)
+
 val GetAllNotesData: Type = object : TypeToken<List<NotesData>>() {}.type

@@ -61,11 +61,13 @@ class RankingFragment : Fragment() {
             Translations.ACTUAL_TO_HUMAN_READABLE[Constants.FIELDS_TO_BE_DISPLAYED_RANKING[3]]
         root.tv_datapoint_five.text =
             Translations.ACTUAL_TO_HUMAN_READABLE[Constants.FIELDS_TO_BE_DISPLAYED_RANKING[4]]
-        val adapter = RankingListAdapter(activity!!, convertToFilteredTeamsList(
-            Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value,
-            MainViewerActivity.teamList
-        ))
-        if(refreshId == null){
+        val adapter = RankingListAdapter(
+            activity!!, convertToFilteredTeamsList(
+                Constants.PROCESSED_OBJECT.CALCULATED_PREDICTED_TEAM.value,
+                MainViewerActivity.teamList
+            )
+        )
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: ranking")
                 adapter.notifyDataSetChanged()
@@ -89,7 +91,7 @@ class RankingFragment : Fragment() {
             ).commit()
         }
 
-        root.btn_toggle.setOnClickListener{
+        root.btn_toggle.setOnClickListener {
             toggleToPredicted()
         }
         return root

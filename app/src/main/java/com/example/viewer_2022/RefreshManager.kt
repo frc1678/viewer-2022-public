@@ -11,16 +11,23 @@ import kotlinx.coroutines.flow.onEach
 import java.util.*
 import kotlin.time.Duration
 
-
+// Manages updates to the data and triggering refreshes in the UI
 class RefreshManager {
     private val listeners = mutableMapOf<String, () -> Unit>()
 
 
     fun start(scope: CoroutineScope) {
         if (!Constants.USE_TEST_DATA) {
-            tickerFlow(Duration.seconds(Constants.REFRESH_INTERVAL), Duration.seconds(Constants.REFRESH_INTERVAL)).onEach {
+            tickerFlow(
+                Duration.seconds(Constants.REFRESH_INTERVAL),
+                Duration.seconds(Constants.REFRESH_INTERVAL)
+            ).onEach {
                 Log.d("data-refresh", "tick")
-                MainViewerActivity.updateNotesCache()
+                try {
+                    MainViewerActivity.updateNotesCache()
+                } catch (e: Throwable) {
+                    Log.e("data-refresh", "Error fetching notes data $it")
+                }
                 GetDataFromWebsite({
                     Log.i("data-refresh", "Fetched data from website successfully")
 

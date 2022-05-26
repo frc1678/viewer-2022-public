@@ -4,8 +4,8 @@
     xmlns:mstb="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/White">
+    android:background="@color/White"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,36 +24,36 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/red_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:checkable="true"
                 android:text="Red"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textColor="@color/Black"
-                android:checkable="true"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipBackgroundColor="@drawable/map_red_selector"/>
+                app:chipBackgroundColor="@drawable/map_red_selector" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/none_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:checkable="true"
                 android:text="None"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textColor="@color/Black"
-                android:checkable="true"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipBackgroundColor="@drawable/map_none_selector"/>
+                app:chipBackgroundColor="@drawable/map_none_selector" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/blue_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:checkable="true"
                 android:text="Blue"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textColor="@color/Black"
-                android:checkable="true"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                app:chipBackgroundColor="@drawable/map_blue_selector"/>
+                app:chipBackgroundColor="@drawable/map_blue_selector" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -61,18 +61,18 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"/>
+            android:layout_weight="2" />
 
         <ImageButton
             android:id="@+id/close_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/very_small"
+            android:layout_marginRight="@dimen/very_small"
             android:layout_weight="1"
             android:background="@color/Red"
-            android:src="@drawable/close_button"
             android:scaleType="fitCenter"
-            android:layout_marginRight="@dimen/very_small"
-            android:layout_marginTop="@dimen/very_small"/>
+            android:src="@drawable/close_button" />
 
 
     </LinearLayout>
@@ -82,6 +82,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
-        android:src="@drawable/field_map"/>
+        android:src="@drawable/field_map" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

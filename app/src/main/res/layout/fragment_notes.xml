@@ -6,28 +6,26 @@
 
     <EditText
         android:id="@+id/et_notes"
-        android:inputType="textMultiLine"
-        android:gravity="top|start"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:enabled="false"
-        />
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_edit_notes"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_gravity="end|bottom"
-        android:contentDescription="Edit"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/very_small"
         android:backgroundTint="@color/ButtonGreen"
+        android:contentDescription="Edit"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_edit_24"
         app:borderWidth="0dp"
-        />
+        app:layout_anchorGravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

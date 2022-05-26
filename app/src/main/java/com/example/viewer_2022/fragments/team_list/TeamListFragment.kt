@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_team_list.view.*
 class TeamListFragment : Fragment() {
     private val teamDetailsFragment = TeamDetailsFragment()
     private val teamDetailsFragmentArguments = Bundle()
-    private val list: List<String> = MainViewerActivity.teamList.sortedBy{it.toInt()}
+    private val list: List<String> = MainViewerActivity.teamList.sortedBy { it.toInt() }
 
     private var refreshId: String? = null
 
@@ -61,12 +61,12 @@ class TeamListFragment : Fragment() {
         return root
     }
 
-    private fun updateTeamListView(root: View){
+    private fun updateTeamListView(root: View) {
         val adapter = TeamListAdapter(
             context = activity!!,
             items = list
         )
-        if(refreshId == null){
+        if (refreshId == null) {
             refreshId = MainViewerActivity.refreshManager.addRefreshListener {
                 Log.d("data-refresh", "Updated: team-list")
                 adapter.notifyDataSetInvalidated()
